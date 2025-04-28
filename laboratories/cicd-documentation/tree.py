@@ -1,5 +1,5 @@
 from node import Node
-
+import unittest
 
 class Tree:
     """ Tree class for binary tree """
@@ -76,10 +76,64 @@ class Tree:
 
     def _printPreorderTree(self, node):
         # TODO
-        pass
+        if node is not None:
+            print(str(node.data) + ' ')
+            self._printInorderTree(node.left)
+            self._printInorderTree(node.right)
 
     def _printPostorderTree(self, node):
         # TODO
-        pass
+        if node is not None:
+            self._printInorderTree(node.left)
+            self._printInorderTree(node.right)
+            print(str(node.data) + ' ')
 
+
+class TestTreeFind(unittest.TestCase):
+
+    def setUp(self):
+        """Set up a tree for testing."""
+        # Tree structure:
+        #       5
+        #      / \
+        #     3   7
+        #    / \ / \
+        #   2  4 6  8
+        self.tree = Tree()
+        self.tree.add(5)
+        self.tree.add(3)
+        self.tree.add(7)
+        self.tree.add(2)
+        self.tree.add(4)
+        self.tree.add(6)
+        self.tree.add(8)
+
+    def test_find_existing_node_root(self):
+        """Test finding the root node."""
+        found_node = self.tree.find(5)
+        self.assertIsNotNone(found_node)
+        self.assertEqual(found_node.data, 5)
+
+    def test_find_existing_node_leaf(self):
+        """Test finding a leaf node."""
+        found_node = self.tree.find(8)
+        self.assertIsNotNone(found_node)
+        self.assertEqual(found_node.data, 8)
+
+    def test_find_existing_node_internal(self):
+        """Test finding an internal node (not root)."""
+        found_node = self.tree.find(3)
+        self.assertIsNotNone(found_node)
+        self.assertEqual(found_node.data, 3)
+
+    def test_find_non_existing_node(self):
+        """Test finding a node that does not exist."""
+        found_node = self.tree.find(10)
+        self.assertIsNone(found_node)
+
+    def test_find_in_empty_tree(self):
+        """Test finding in an empty tree."""
+        empty_tree = Tree()
+        found_node = empty_tree.find(1)
+        self.assertIsNone(found_node)
 

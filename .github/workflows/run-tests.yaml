@@ -1,0 +1,20 @@
+name: cicd-documentation
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run:
+    name: 🚀 Run
+    runs-on: ubuntu-latest
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🚀 Run
+        shell: bash
+        run: |
+          cd laboratories/cicd-documentation
+          python3 main.py
